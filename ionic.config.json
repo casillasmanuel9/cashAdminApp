@@ -1,0 +1,7 @@
+{
+  "name": "cashAdmin",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

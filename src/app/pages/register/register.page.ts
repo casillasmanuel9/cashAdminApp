@@ -26,8 +26,6 @@ export class RegisterPage implements OnInit {
   register() {
     const { username, email, password } = this.formLoginRegister.value;
     this.authService.crearUsuario(username, email, password).then(async credenciales => {
-      const {user} = credenciales;
-      await user.updateProfile({displayName: username});
       this.navCrtl.navigateRoot(["/"]);
     }).catch(err => console.error(err));
   }

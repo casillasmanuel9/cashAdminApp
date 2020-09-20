@@ -2,14 +2,16 @@ import { NavController } from '@ionic/angular';
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 
-import { map, tap } from 'rxjs/operators';
+import 'firebase/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { User } from '../models/users.model';
 
-@Injectable({
+@Injectable({ 
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(public auth: AngularFireAuth, private navCrtl: NavController) { }
+  constructor(public auth: AngularFireAuth, private navCrtl: NavController, public firestore: AngularFirestore) { }
 
   initAuthListener() {
     this.auth.authState.subscribe(fUser => {
@@ -18,7 +20,11 @@ export class AuthService {
   }
 
   crearUsuario(username: string, email: string, password: string) {
-    return this.auth.createUserWithEmailAndPassword(email, password);
+    return this.auth.createUserWithEmailAndPassword(email, password).then(async ({user}) => {
+      await user.updateProfile({displayName: username});
+      const newUser = new User(user.uid,user.email, user.displayName);
+      return this.firestore.doc(`${user.uid}/usuario`).set({...newUser}).then();
+    });
   }
 
   loginUsuario(email: string, password: string) {

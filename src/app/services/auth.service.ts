@@ -32,6 +32,7 @@ export class AuthService {
     return this.auth.createUserWithEmailAndPassword(email, password).then(async ({user}) => {
       await user.updateProfile({displayName: username});
       const newUser = new User(user.uid,user.email, username);
+      this.store.dispatch(cargarUsuarioSuccess({usuario: newUser}));
       return this.firestore.doc(`${user.uid}/usuario`).set({...newUser}).then();
     });
   }

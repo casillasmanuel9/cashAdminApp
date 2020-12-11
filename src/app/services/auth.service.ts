@@ -16,13 +16,17 @@ export class AuthService {
 
   constructor(public auth: AngularFireAuth, private navCrtl: NavController, public firestore: AngularFirestore, private store: Store<AppState>) { }
 
+  private _user: User;
+
   initAuthListener() {
     this.auth.authState.subscribe(fUser => {
       // console.log('listener',  fUser);
       if(fUser !== null) {
         const usuario = new User(fUser.uid, fUser.email, fUser.displayName);
+        this._user = usuario;
         this.store.dispatch(cargarUsuarioSuccess({usuario}));
       } else {
+        this._user = null;
         this.store.dispatch(cargarUsuarioSuccess({usuario: null})); 
       }
     })
@@ -47,5 +51,9 @@ export class AuthService {
 
   isAuth() {
     return this.auth.authState;
+  }
+
+  get user() {
+    return this._user;
   }
 }

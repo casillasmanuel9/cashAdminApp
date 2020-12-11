@@ -16,13 +16,13 @@
   <ion-grid fixed>
     <ion-row class="ion-no-padding">
       <ion-col size="12" size-md="6" size-xl="4" class="ion-no-padding">
-        <app-card-item [img]="'/assets/icons/035-cash.svg'" [subtitle]="'Ingresos'" [titleCost]="100"></app-card-item>
+        <app-card-item [img]="'/assets/icons/035-cash.svg'" [subtitle]="'Ingresos'" [titleCost]="totalIngresos"></app-card-item>
       </ion-col>
       <ion-col size="12" size-md="6" size-xl="4" class="ion-no-padding">
-        <app-card-item [img]="'/assets/icons/013-hold.svg'" [subtitle]="'Egresos'" [titleCost]="70"></app-card-item>
+        <app-card-item [img]="'/assets/icons/013-hold.svg'" [subtitle]="'Egresos'" [titleCost]="totalEgresos"></app-card-item>
       </ion-col>
       <ion-col size="12" size-md="6" size-xl="4" class="ion-no-padding">
-        <app-card-item [img]="'/assets/icons/016-graphics.svg'" [subtitle]="'Balance'" [titleCost]="30"></app-card-item>
+        <app-card-item [img]="'/assets/icons/016-graphics.svg'" [subtitle]="'Balance'" [titleCost]="totalIngresos - totalEgresos"></app-card-item>
       </ion-col>
     </ion-row>
   </ion-grid>

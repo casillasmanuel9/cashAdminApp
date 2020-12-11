@@ -17,26 +17,33 @@
         <ion-label position="floating">Nombre</ion-label>
         <ion-input formControlName="name"></ion-input>
       </ion-item>
+      <ion-radio-group value="biff" formControlName="type">
+        <ion-list-header>
+          <ion-label>Tipo</ion-label>
+        </ion-list-header>
+    
+        <ion-item>
+          <ion-label>Ingreso</ion-label>
+          <ion-radio slot="start" value="ingreso" color="success"></ion-radio>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label>Egreso</ion-label>
+          <ion-radio slot="start" value="egreso" color="danger"></ion-radio>
+        </ion-item>
+    
+      </ion-radio-group>
       <ion-item>
         <ion-label position="floating" >Cantidad</ion-label>
-        <ion-input formControlName="quantity"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label> {{textType}} </ion-label>
-        <ion-toggle color="danger" mode="ios" formControlName="type" ></ion-toggle>
+        <ion-input type="number" formControlName="quantity"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label>Categoria</ion-label>
-        <ion-select placeholder="Seleccionar" mode="ios" formControlName="category">
-          <ion-select-option value="alimentacion"> ​Alimentación </ion-select-option>
-          <ion-select-option value="vivienda"> Vivienda​ </ion-select-option>
-          <ion-select-option value="transporte"> Transporte​ </ion-select-option>
-          <ion-select-option value="salud"> Salud y autocuidado </ion-select-option>​
-          <ion-select-option value="entretenimiento"> Entretenimiento y diversión </ion-select-option>
-          <ion-select-option value="vestuario"> ​Vestuario​ </ion-select-option>
-          <ion-select-option value="educacion"> Educación​ </ion-select-option>
-          <ion-select-option value="comunicaciones"> Comunicaciones </ion-select-option>
-          ​<ion-select-option value="otros"> Otros gastos </ion-select-option>
+        <ion-select interface="popover" *ngIf="formIngresosEgresos.get('type').value === 'ingreso'" placeholder="Seleccionar" formControlName="category">
+          <ion-select-option  [value]="item" *ngFor="let item of categoryIngreso" > {{item}} </ion-select-option>
+        </ion-select>
+        <ion-select interface="popover" *ngIf="formIngresosEgresos.get('type').value === 'egreso'" placeholder="Seleccionar" formControlName="category">
+          <ion-select-option  [value]="item" *ngFor="let item of categoryEgreso" > {{item}} </ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>

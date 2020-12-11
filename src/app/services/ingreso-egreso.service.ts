@@ -19,7 +19,7 @@ export class IngresoEgresoService {
       .doc(`${this.authService.user.uid}/ingresos-egresos`)
       .collection('items')
       .add({ ...ingresoEgreso });
-  }
+  } 
 
   initIngresosEgresosListener(uid: string) {
     return this.fireStore

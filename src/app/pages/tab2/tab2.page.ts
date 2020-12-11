@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Subscription } from "rxjs";
-import { UiService } from 'src/app/services/ui.service';
+import { Entry } from "src/app/models/entry.model";
+import { IngresoEgresoService } from "src/app/services/ingreso-egreso.service";
+import { UiService } from "src/app/services/ui.service";
 
 @Component({
   selector: "app-tab2",
@@ -12,20 +14,41 @@ export class Tab2Page implements OnDestroy, OnInit {
   formIngresosEgresos: FormGroup;
   typeSubs: Subscription;
 
-  textType = "Ingreso";
+  public categoryEgreso : string [] = [
+    '​Alimentación',
+    'Vivienda​',
+    'Transporte​',
+    'Salud y autocuidado',
+    'Entretenimiento y diversión',
+    '​Vestuario​',
+    'Educación​',
+    'Comunicaciones',
+    'Otros gastos'
+  ];
 
-  constructor(private formBuider: FormBuilder, private ui: UiService) {
+  public categoryIngreso : string [] = [
+    'Nómina'
+  ];
+
+
+  constructor(
+    private formBuider: FormBuilder,
+    private ui: UiService,
+    private ingresoEgreso: IngresoEgresoService
+  ) {
     this.formIngresosEgresos = this.formBuider.group({
       name: ["", Validators.required],
-      quantity: ["", Validators.required],
-      type: [false],
-      category: ["", Validators.required], 
-      date: ['', Validators.required]
+      quantity: [null, [Validators.required, Validators.min(1)]],
+      type: ['ingreso'],
+      category: ["", Validators.required],
+      date: ["", Validators.required],
     });
 
     this.typeSubs = this.formIngresosEgresos
       .get("type")
-      .valueChanges.subscribe((type) => this.textType = (type ?"Egreso" : "Ingreso"));
+      .valueChanges.subscribe(
+        () => this.formIngresosEgresos.get('category').setValue('')
+      );
   }
 
   ngOnInit(): void {
@@ -33,9 +56,8 @@ export class Tab2Page implements OnDestroy, OnInit {
   }
 
   selectDate() {
-    const date = new Date();
-    const dateFormat = this.formatDate(date);
-    this.formIngresosEgresos.get('date').setValue(dateFormat);
+    const dateFormat = this.formatDate();
+    this.formIngresosEgresos.get("date").setValue(dateFormat);
   }
 
   ngOnDestroy(): void {
@@ -43,21 +65,24 @@ export class Tab2Page implements OnDestroy, OnInit {
   }
 
   async save() {
-    await this.ui.presentLoading('Guardando');
-    setTimeout(() => {
-      console.log(this.formIngresosEgresos.value);
-      this.ui.stopLoading()
-      this.ui.presentToast('Guardado con éxito');
-      this.formIngresosEgresos.reset();
-      this.selectDate();
-    }, 2000);
+    await this.ui.presentLoading("Guardando");
+    const entry: Entry = { ...this.formIngresosEgresos.value };
+    this.ingresoEgreso
+      .crearIngresoEgreso(entry)
+      .then(console.log)
+      .catch(console.error);
+    this.ui.stopLoading();
+    this.ui.presentToast("Guardado con éxito");
+    this.formIngresosEgresos.reset();
+    this.selectDate();
+    this.formIngresosEgresos.patchValue({type:'ingreso'});
   }
 
-  formatDate(date: Date) {
+  formatDate() {
     const now = new Date();
     const day = ("0" + now.getDate()).slice(-2);
     const month = ("0" + (now.getMonth() + 1)).slice(-2);
-    const today = now.getFullYear()+"-"+(month)+"-"+(day) ;
+    const today = now.getFullYear() + "-" + month + "-" + day;
     return today;
   }
 }

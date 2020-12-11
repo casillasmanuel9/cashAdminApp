@@ -14,22 +14,19 @@ export class Tab2Page implements OnDestroy, OnInit {
   formIngresosEgresos: FormGroup;
   typeSubs: Subscription;
 
-  public categoryEgreso : string [] = [
-    '​Alimentación',
-    'Vivienda​',
-    'Transporte​',
-    'Salud y autocuidado',
-    'Entretenimiento y diversión',
-    '​Vestuario​',
-    'Educación​',
-    'Comunicaciones',
-    'Otros gastos'
+  public categoryEgreso: string[] = [
+    "​Alimentación",
+    "Vivienda​",
+    "Transporte​",
+    "Salud y autocuidado",
+    "Entretenimiento y diversión",
+    "​Vestuario​",
+    "Educación​",
+    "Comunicaciones",
+    "Otros gastos",
   ];
 
-  public categoryIngreso : string [] = [
-    'Nómina'
-  ];
-
+  public categoryIngreso: string[] = ["Nómina"];
 
   constructor(
     private formBuider: FormBuilder,
@@ -39,15 +36,15 @@ export class Tab2Page implements OnDestroy, OnInit {
     this.formIngresosEgresos = this.formBuider.group({
       name: ["", Validators.required],
       quantity: [null, [Validators.required, Validators.min(1)]],
-      type: ['ingreso'],
+      type: ["ingreso"],
       category: ["", Validators.required],
       date: ["", Validators.required],
     });
 
     this.typeSubs = this.formIngresosEgresos
       .get("type")
-      .valueChanges.subscribe(
-        () => this.formIngresosEgresos.get('category').setValue('')
+      .valueChanges.subscribe(() =>
+        this.formIngresosEgresos.get("category").setValue("")
       );
   }
 
@@ -67,15 +64,12 @@ export class Tab2Page implements OnDestroy, OnInit {
   async save() {
     await this.ui.presentLoading("Guardando");
     const entry: Entry = { ...this.formIngresosEgresos.value };
-    this.ingresoEgreso
-      .crearIngresoEgreso(entry)
-      .then(console.log)
-      .catch(console.error);
+    await this.ingresoEgreso.crearIngresoEgreso(entry);
     this.ui.stopLoading();
     this.ui.presentToast("Guardado con éxito");
     this.formIngresosEgresos.reset();
     this.selectDate();
-    this.formIngresosEgresos.patchValue({type:'ingreso'});
+    this.formIngresosEgresos.patchValue({ type: "ingreso" });
   }
 
   formatDate() {

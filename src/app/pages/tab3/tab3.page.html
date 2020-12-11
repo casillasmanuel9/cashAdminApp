@@ -12,4 +12,24 @@
       <ion-title size="large">Lista</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <ion-list>
+    <ion-list-header>
+      Historial
+    </ion-list-header>
+
+    <ion-item *ngFor="let entry of entries" >
+      <ion-thumbnail slot="start">
+        <img *ngIf="entry.type === 'ingreso'" src="assets/icons/035-cash.svg">
+        <img *ngIf="entry.type === 'egreso'" src="assets/icons/013-hold.svg">
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{entry.name}}</h2>
+        <h3> {{entry.category}} </h3>
+        <p *ngIf="entry.type === 'ingreso'" color="success">  {{entry.quantity | currency}} </p>
+        <p *ngIf="entry.type === 'egreso'" color="danger">  -{{entry.quantity | currency}} </p>
+        <p> {{entry.date}} </p>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>

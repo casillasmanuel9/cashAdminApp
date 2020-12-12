@@ -4,7 +4,7 @@ import { Subscription } from "rxjs";
 import { Entry } from "src/app/models/entry.model";
 import { IngresoEgresoService } from "src/app/services/ingreso-egreso.service";
 import { UiService } from "src/app/services/ui.service";
-
+import * as moment from 'moment'
 @Component({
   selector: "app-tab2",
   templateUrl: "tab2.page.html",
@@ -18,15 +18,32 @@ export class Tab2Page implements OnDestroy, OnInit {
     "​Alimentación",
     "Vivienda​",
     "Transporte​",
+    "Coche",
+    "Impuesto",
     "Salud y autocuidado",
     "Entretenimiento y diversión",
     "​Vestuario​",
     "Educación​",
-    "Comunicaciones",
-    "Otros gastos",
+    "Teléfono",
+    "Deporte",
+    "Bebé",
+    "Belleza",
+    "Regalo",
+    "Otros",
   ];
 
-  public categoryIngreso: string[] = ["Nómina"];
+  public categoryIngreso: string[] = [
+    "Salario",
+    "Premios",
+    "Subsidios",
+    "Venta",
+    "Alquiler",
+    "Reenbolsos",
+    "Cupones",
+    "Loptería",
+    "Inversiones",
+    "Otros"
+  ];
 
   constructor(
     private formBuider: FormBuilder,
@@ -53,8 +70,7 @@ export class Tab2Page implements OnDestroy, OnInit {
   }
 
   selectDate() {
-    const dateFormat = this.formatDate();
-    this.formIngresosEgresos.get("date").setValue(dateFormat);
+    this.formIngresosEgresos.get("date").setValue(moment().format('DD/MM/YYYY'));
   }
 
   ngOnDestroy(): void {
@@ -62,7 +78,7 @@ export class Tab2Page implements OnDestroy, OnInit {
   }
 
   async save() {
-    await this.ui.presentLoading("Guardando");
+    await this.ui.presentLoading("Guardando"); 
     const entry: Entry = { ...this.formIngresosEgresos.value };
     await this.ingresoEgreso.crearIngresoEgreso(entry);
     this.ui.stopLoading();
@@ -72,11 +88,4 @@ export class Tab2Page implements OnDestroy, OnInit {
     this.formIngresosEgresos.patchValue({ type: "ingreso" });
   }
 
-  formatDate() {
-    const now = new Date();
-    const day = ("0" + now.getDate()).slice(-2);
-    const month = ("0" + (now.getMonth() + 1)).slice(-2);
-    const today = now.getFullYear() + "-" + month + "-" + day;
-    return today;
-  }
 }

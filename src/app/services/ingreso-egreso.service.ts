@@ -23,7 +23,7 @@ export class IngresoEgresoService {
 
   initIngresosEgresosListener(uid: string) {
     return this.fireStore
-      .collection(`${uid}/ingresos-egresos/items`)
+      .collection(`${uid}/ingresos-egresos/items`, ref => ref.orderBy('date', 'desc'))
       .snapshotChanges()
       .pipe(
         map((snapshoot) =>

@@ -1,6 +1,6 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar>
-    <ion-title> Ingresos-Egresos </ion-title>
+    <ion-title> Crear Registro </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -39,10 +39,10 @@
       </ion-item>
       <ion-item>
         <ion-label>Categoria</ion-label>
-        <ion-select interface="popover" *ngIf="formIngresosEgresos.get('type').value === 'ingreso'" placeholder="Seleccionar" formControlName="category">
+        <ion-select *ngIf="formIngresosEgresos.get('type').value === 'ingreso'" placeholder="Seleccionar" formControlName="category">
           <ion-select-option  [value]="item" *ngFor="let item of categoryIngreso" > {{item}} </ion-select-option>
         </ion-select>
-        <ion-select interface="popover" *ngIf="formIngresosEgresos.get('type').value === 'egreso'" placeholder="Seleccionar" formControlName="category">
+        <ion-select *ngIf="formIngresosEgresos.get('type').value === 'egreso'" placeholder="Seleccionar" formControlName="category">
           <ion-select-option  [value]="item" *ngFor="let item of categoryEgreso" > {{item}} </ion-select-option>
         </ion-select>
       </ion-item>

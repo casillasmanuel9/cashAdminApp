@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar>
     <ion-title>
       Lista
@@ -25,11 +25,18 @@
       </ion-thumbnail>
       <ion-label>
         <h2>{{entry.name}}</h2>
+        <ion-text [color]="entry.type === 'ingreso' ? 'success': 'danger'">
+          <h2 *ngIf="entry.type === 'ingreso'">  {{entry.quantity | currency}} </h2>
+          <h2 *ngIf="entry.type === 'egreso'" >  {{entry.quantity | currency}} </h2>
+        </ion-text>
         <h3> {{entry.category}} </h3>
-        <p *ngIf="entry.type === 'ingreso'" color="success">  {{entry.quantity | currency}} </p>
-        <p *ngIf="entry.type === 'egreso'" color="danger">  -{{entry.quantity | currency}} </p>
-        <p> {{entry.date}} </p>
+        <p> {{entry.date | date: 'dd/MM/yyyy'}} </p>
       </ion-label>
+      <ion-buttons slot="end">
+        <ion-button (click)="optionsActionSheet(entry.uid, entry.name)">
+          <ion-icon slot="icon-only" name="ellipsis-vertical-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
     </ion-item>
   </ion-list>
 </ion-content>

@@ -4,7 +4,7 @@ export interface Entry {
     quantity: number,
     type: TypeCategory,
     category: string,
-    date: string
+    date: number
 }
 
 export enum TypeCategory {

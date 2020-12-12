@@ -14,10 +14,6 @@
   </ion-header>
 
   <ion-list>
-    <ion-list-header>
-      Historial
-    </ion-list-header>
-
     <ion-item *ngFor="let entry of entries" >
       <ion-thumbnail slot="start">
         <img *ngIf="entry.type === 'ingreso'" src="assets/icons/035-cash.svg">

@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { ChartType } from 'chart.js';
+import { Label, MultiDataSet } from 'ng2-charts';
 import { Entry } from 'src/app/models/entry.model';
 import { AppState } from 'src/app/store/app.reducers';
 import { SubSink } from 'subsink';
@@ -19,6 +21,15 @@ export class Tab1Page implements OnInit, OnDestroy{
 
   public entries: Entry[];
   private subs = new SubSink();
+
+  public chartLabels: Label[] = ['Ingresos', 'Egresos'];
+  public chartData: MultiDataSet = [];
+  public chartType: ChartType = 'doughnut';
+  public chartColors = [
+    {
+      backgroundColor: ['rgba(0,255,0,0.4)','rgba(255,0,0,0.4)'],
+    },
+  ];
   
   constructor(private store: Store<AppState>) {}
   
@@ -47,6 +58,8 @@ export class Tab1Page implements OnInit, OnDestroy{
         this.egresos++;
       }
     }
+
+    this.chartData = [[this.totalIngresos, this.totalEgresos]];
   }
   
 }

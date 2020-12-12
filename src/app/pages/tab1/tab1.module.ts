@@ -6,6 +6,8 @@ import { Tab1Page } from './tab1.page';
 
 import { Tab1PageRoutingModule } from './tab1-routing.module';
 import { ComponentsModule } from 'src/app/components/components.module';
+import { ChartsModule } from 'ng2-charts';
+
 
 @NgModule({
   imports: [
@@ -13,7 +15,8 @@ import { ComponentsModule } from 'src/app/components/components.module';
     CommonModule,
     FormsModule,
     Tab1PageRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    ChartsModule
   ],
   declarations: [Tab1Page]
 })

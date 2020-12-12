@@ -39,10 +39,10 @@
       </ion-item>
       <ion-item>
         <ion-label>Categoria</ion-label>
-        <ion-select *ngIf="formIngresosEgresos.get('type').value === 'ingreso'" placeholder="Seleccionar" formControlName="category">
+        <ion-select interface="action-sheet" *ngIf="formIngresosEgresos.get('type').value === 'ingreso'" placeholder="Seleccionar" formControlName="category">
           <ion-select-option  [value]="item" *ngFor="let item of categoryIngreso" > {{item}} </ion-select-option>
         </ion-select>
-        <ion-select *ngIf="formIngresosEgresos.get('type').value === 'egreso'" placeholder="Seleccionar" formControlName="category">
+        <ion-select interface="action-sheet" *ngIf="formIngresosEgresos.get('type').value === 'egreso'" placeholder="Seleccionar" formControlName="category">
           <ion-select-option  [value]="item" *ngFor="let item of categoryEgreso" > {{item}} </ion-select-option>
         </ion-select>
       </ion-item>

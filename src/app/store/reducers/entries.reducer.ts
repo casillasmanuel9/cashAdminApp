@@ -1,6 +1,6 @@
 import { createReducer, on, State } from '@ngrx/store';
 import { Entry } from 'src/app/models/entry.model';
-import { loadEntries, loadEntriesSuccess } from '../actions';
+import { loadEntries, loadEntriesSuccess, UnSetEntries } from '../actions';
 
 export interface EntriesState {
     entries: Entry[],
@@ -27,5 +27,6 @@ export const entriesReducer = createReducer(
     on(
         loadEntriesSuccess,
         (state, {entries}) => ({...state, loading: false, loaded: true, entries})
-    )
+    ),
+    on(UnSetEntries, (state) => ({...state, entries: [], loaded: false, loading: false}))
 );

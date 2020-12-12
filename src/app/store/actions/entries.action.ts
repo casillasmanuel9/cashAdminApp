@@ -14,3 +14,7 @@ export const addNewEntry = createAction(
     '[Entries] addNewEntry',
     props<{entry: Entry}>()
 );
+
+export const UnSetEntries = createAction(
+    '[Entries] UnSetEntries'
+);

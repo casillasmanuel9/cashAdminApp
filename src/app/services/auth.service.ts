@@ -8,6 +8,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { User } from '../models/users.model';
 import { Store } from '@ngrx/store';
 import { cargarUsuarioSuccess } from '../store/actions/users.actions';
+import { UnSetEntries } from '../store/actions';
 
 @Injectable({ 
   providedIn: 'root'
@@ -27,6 +28,7 @@ export class AuthService {
         this.store.dispatch(cargarUsuarioSuccess({usuario}));
       } else {
         this._user = null;
+        this.store.dispatch(UnSetEntries());
         this.store.dispatch(cargarUsuarioSuccess({usuario: null})); 
       }
     })
